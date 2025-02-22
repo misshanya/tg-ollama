@@ -20,6 +20,8 @@ func main() {
 
 	cfg := config.NewConfig()
 
+	generalHandler := handlers.NewGeneralHandler()
+
 	ollamaClient := openai.NewClient(option.WithBaseURL(cfg.OllamaURL))
 	ollamaService := services.NewOllamaService(ollamaClient, cfg.OllamaModel, cfg.SystemPrompt)
 	ollamaHandler := handlers.NewOllamaHandler(ollamaService)
@@ -32,6 +34,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	b.RegisterHandler(bot.HandlerTypeMessageText, "/start", bot.MatchTypeExact, generalHandler.Start)
 
 	log.Println("Starting bot")
 	b.Start(ctx)
