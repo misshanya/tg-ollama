@@ -8,9 +8,10 @@ import (
 )
 
 type Config struct {
-	BotToken    string
-	OllamaURL   string
-	OllamaModel string
+	BotToken     string
+	OllamaURL    string
+	OllamaModel  string
+	SystemPrompt string
 }
 
 func NewConfig() *Config {
@@ -33,9 +34,15 @@ func NewConfig() *Config {
 		log.Fatalln("missing OLLAMA_MODEL")
 	}
 
+	systemPrompt := os.Getenv("SYSTEM_PROMPT")
+	if systemPrompt == "" {
+		log.Println("missing SYSTEM_PROMPT")
+	}
+
 	return &Config{
-		BotToken:    botToken,
-		OllamaURL:   ollamaURL,
-		OllamaModel: ollamaModel,
+		BotToken:     botToken,
+		OllamaURL:    ollamaURL,
+		OllamaModel:  ollamaModel,
+		SystemPrompt: systemPrompt,
 	}
 }

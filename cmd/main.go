@@ -21,7 +21,7 @@ func main() {
 	cfg := config.NewConfig()
 
 	ollamaClient := openai.NewClient(option.WithBaseURL(cfg.OllamaURL))
-	ollamaService := services.NewOllamaService(ollamaClient, cfg.OllamaModel)
+	ollamaService := services.NewOllamaService(ollamaClient, cfg.OllamaModel, cfg.SystemPrompt)
 	ollamaHandler := handlers.NewOllamaHandler(ollamaService)
 
 	opts := []bot.Option{
